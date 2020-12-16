@@ -3,10 +3,6 @@ package br.com.paulobc.camelmail.route;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.camel.Endpoint;
-import org.apache.camel.Exchange;
-import org.apache.camel.PollingConsumer;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 public class IMAPMailRouteBuilder extends RouteBuilder {
@@ -55,23 +51,7 @@ public class IMAPMailRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        // PollingConsumer pollingConsumer = null;
-
-        // Endpoint endpoint = this.getContext().getEndpoint(this.getImapEndpoint());
-
-        // pollingConsumer = endpoint.createPollingConsumer();
-        // pollingConsumer.start();
-        from(this.getImapEndpoint())
-                /*
-                 * from(pollingConsumer.getEndpoint()).process(new Processor() {
-                 * 
-                 * @Override public void process(Exchange exchange) throws Exception { ;
-                 * 
-                 * }
-                 * 
-                 * })
-                 */
-                .streamCaching().to("file://newmail");
+        from(this.getImapEndpoint()).streamCaching().to("file://inbox");
 
     }
 

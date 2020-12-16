@@ -32,10 +32,12 @@ public class App {
                 context.start();
                 Thread.sleep(60000 * 2);
                 context.stop();
+                context.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
 
     }
 }
