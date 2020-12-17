@@ -3,11 +3,10 @@ package br.com.paulobc.camelmail.route;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
-import br.com.paulobc.camelmail.parser.Parser;
+import br.com.paulobc.camelmail.route.processors.attachment.AttachmentDownloaderProcessor;
+import br.com.paulobc.camelmail.route.processors.content.ContentProcessor;
 
 public class IMAPMailRouteBuilder extends RouteBuilder {
     private String imapAddress;
@@ -55,18 +54,8 @@ public class IMAPMailRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from(this.getImapEndpoint()).streamCaching().process(new Processor() {
-
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                String messageBody = exchange.getMessage().getBody(String.class);
-                
-                exchange.getMessage().setBody(new Parser().htmlToPlainText(messageBody));
-
-            }
-            
-        })
-        .to("file://inbox").setId(RouteTypeID.IMAP.getId());
+        from(this.getImapEndpoint()).streamCaching().process(new ContentProcessor())
+                .process(new AttachmentDownloaderProcessor()).to("file://inbox").setId(RouteTypeID.IMAP.getId());
 
     }
 
