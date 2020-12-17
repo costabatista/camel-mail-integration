@@ -7,6 +7,8 @@ import org.apache.camel.support.jsse.SSLContextParameters;
 import org.apache.camel.support.jsse.TrustManagersParameters;
 
 import br.com.paulobc.camelmail.route.IMAPMailRouteBuilder;
+import br.com.paulobc.camelmail.route.RouteTypeID;
+import br.com.paulobc.camelmail.route.SMTPRouteBuilder;
 
 /**
  * Hello world!
@@ -28,16 +30,18 @@ public class App {
         context.setSSLContextParameters(scp);
         try {
             context.addRoutes(new IMAPMailRouteBuilder());
+            context.addRoutes(new SMTPRouteBuilder());
             while (true) {
                 context.start();
-                Thread.sleep(60000 * 2);
+                Thread.sleep(60000 * 5);
+
                 context.stop();
                 context.close();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
 
     }
 }

@@ -31,12 +31,12 @@ public class IMAPMailRouteBuilder extends RouteBuilder {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append(this.isSsl() ? "imaps://" : "imap://").append(this.getImapAddress()).append(":993")
-                .append("?username=").append(this.getMailAddress()).append("&password=").append(this.getPassword())
-                .append("&delete=false").append("&unseen=true").append("&delay=60000").append("&closeFolder=false")
-                .append("&disconnect=false").append("&debugMode=true").append("&fetchSize=35")
-                .append("&alternativeBodyHeader=plain-text").append("&greedy=true");
-        System.out.println(builder.toString());
+        builder.append(this.isSsl() ? "imaps://" : "imap://").append(this.getImapAddress()).append("?username=")
+                .append(this.getMailAddress()).append("&password=").append(this.getPassword()).append("&delete=false")
+                .append("&unseen=true").append("&delay=60000").append("&closeFolder=false").append("&disconnect=false")
+                .append("&debugMode=true").append("&fetchSize=35").append("&alternativeBodyHeader=plain-text")
+                .append("&greedy=true");
+
         this.setImapEndpoint(builder.toString());
 
     }
@@ -51,7 +51,7 @@ public class IMAPMailRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from(this.getImapEndpoint()).streamCaching().to("file://inbox");
+        from(this.getImapEndpoint()).streamCaching().to("file://inbox").setId(RouteTypeID.IMAP.getId());
 
     }
 
