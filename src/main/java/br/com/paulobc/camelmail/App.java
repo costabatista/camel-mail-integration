@@ -7,7 +7,7 @@ import org.apache.camel.support.jsse.SSLContextParameters;
 import org.apache.camel.support.jsse.TrustManagersParameters;
 
 import br.com.paulobc.camelmail.route.IMAPMailRouteBuilder;
-import br.com.paulobc.camelmail.route.RouteTypeID;
+
 import br.com.paulobc.camelmail.route.SMTPRouteBuilder;
 
 /**

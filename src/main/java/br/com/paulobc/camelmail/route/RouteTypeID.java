@@ -1,5 +1,7 @@
 package br.com.paulobc.camelmail.route;
 
+
+
 public enum RouteTypeID {
     SMTP("smtp"), IMAP("imap");
 
