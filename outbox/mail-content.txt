@@ -1,0 +1,6 @@
+This it's just a mail content 
+to be used in a sending mail test.
+
+It's based on Apache Camel.
+Thanks.
+Paulo Batista.
