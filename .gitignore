@@ -107,3 +107,8 @@ nb-configuration.xml
 ## OS X
 ##############################
 .DS_Store
+
+##############################
+### Properties config file
+##############################
+src/main/resources/application.properties
