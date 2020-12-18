@@ -3,7 +3,11 @@ package br.com.paulobc.camelmail.route;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.xml.ws.Endpoint;
+
 import org.apache.camel.builder.RouteBuilder;
+
+import br.com.paulobc.camelmail.route.processors.attachment.AttachmentUploaderProcessor;
 
 public class SMTPRouteBuilder extends RouteBuilder {
     private String mailAddress;
@@ -41,11 +45,14 @@ public class SMTPRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+       
+
         from("file://outbox?fileName=mail-content.txt&noop=true")
                 .routeId(RouteTypeID.SMTP.getId())
                 .setHeader("to", simple("paulobatistadacosta@gmail.com"))
-                .setHeader("from", simple("pauloc@linuxmail.org"))
+                .setHeader("from", simple("Paulo Batista da Costa <pauloc@linuxmail.org>"))
                 .setHeader("subject", simple("A mail to test apache camel mail component - by Paulo Batista da Costa"))
+                .process(new AttachmentUploaderProcessor())
                 .to(this.getSmtpEndPoint());
 
     }
