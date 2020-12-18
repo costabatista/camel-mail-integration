@@ -1,10 +1,12 @@
 package br.com.paulobc.camelmail.parser;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -41,11 +43,18 @@ public class Parser {
         for (String line : text) {
 
             if (!(line.trim().isEmpty() || line.matches("\\w.*")))
-                builder.append(line.trim()).append("\n");
+                builder.append(line.trim()).append(System.lineSeparator());
         }
 
         String plainTextContent = builder.toString().trim();
         return plainTextContent;
+    }
+
+
+    public String toJson(Object object, Class classType) {
+        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+        String json = gson.toJson(object, classType).toString();
+        return json;
     }
 
 }

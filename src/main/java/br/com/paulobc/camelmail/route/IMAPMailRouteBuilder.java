@@ -55,7 +55,7 @@ public class IMAPMailRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from(this.getImapEndpoint()).streamCaching().process(new ContentProcessor())
-                .process(new AttachmentDownloaderProcessor()).to("file://inbox").setId(RouteTypeID.IMAP.getId());
+                .process(new AttachmentDownloaderProcessor()).to("file://inbox?fileName=${id}.json").setId(RouteTypeID.IMAP.getId());
 
     }
 
